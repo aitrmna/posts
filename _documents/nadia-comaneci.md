@@ -1,7 +1,7 @@
 ---
 title: The Score That Broke the Scoreboard
 description: Nadia Comăneci and the perfect 10 that wasn't supposed to exist
-date: 2026-01-10 10:00
+date: 2026-01-10 15:51
 ---
 
 On July 18, 1976, a 14-year-old Romanian girl did something so unprecedented that the technology literally couldn't process it.

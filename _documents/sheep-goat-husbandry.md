@@ -1,7 +1,7 @@
 ---
 title: "Sheep & Goat Husbandry: Zero to Competent"
 description: Everything you actually need to know to keep small ruminants alive
-date: 2026-01-10 11:00
+date: 2026-01-10 17:40
 ---
 
 ## The Core Reality
