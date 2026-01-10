@@ -10,7 +10,7 @@ title: Home
 {% assign sorted = site.documents | sort: 'date' | reverse %}
 {% for doc in sorted %}
   <a href="{{ doc.url | relative_url }}" style="display: block; text-decoration: none; color: inherit; padding: 1rem 0; border-bottom: 1px solid var(--border);">
-    {% if doc.date %}<time style="font-family: Inter, sans-serif; font-size: 0.7rem; color: var(--muted); display: block; margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: 0.03em;">{{ doc.date | date: "%d %b %Y" }}</time>{% endif %}
+    {% if doc.date %}<time style="font-family: Inter, sans-serif; font-size: 0.7rem; color: var(--muted); display: block; margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: 0.03em;">{{ doc.date | date: "%d %b %Y · %H:%M" }}</time>{% endif %}
     <strong style="font-family: Inter, sans-serif; font-size: 1.05rem; color: var(--text); display: block;">{{ doc.title }}</strong>
     {% if doc.description %}<span style="color: var(--muted); font-size: 0.9rem; display: block; margin-top: 0.25rem;">{{ doc.description }}</span>{% endif %}
   </a>

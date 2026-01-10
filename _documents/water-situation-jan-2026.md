@@ -1,7 +1,7 @@
 ---
 title: "Water Situation Report"
 description: UK drought status and what to expect for summer 2026
-date: 2026-01-10
+date: 2026-01-10 12:00
 ---
 
 ## The Big Picture
