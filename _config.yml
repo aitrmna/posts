@@ -1,0 +1,28 @@
+title: Shared Documents
+description: A collection of documents worth sharing
+url: ""
+baseurl: ""
+
+# Collections
+collections:
+  documents:
+    output: true
+    permalink: /:name
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "documents"
+    values:
+      layout: "document"
+
+# Exclude from build
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
