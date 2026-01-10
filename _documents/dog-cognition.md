@@ -1,7 +1,7 @@
 ---
 title: What Dogs Actually Understand
 description: Communication, cognition, and the science behind the behaviors
-date: 2025-01-10
+date: 2026-01-10
 ---
 
 Dogs communicate constantly. Most owners misread the signals or attribute human reasoning where instinct operates. Here's what the research actually shows.
