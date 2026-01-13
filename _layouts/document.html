@@ -4,7 +4,7 @@ layout: default
 <article>
   <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem;">
     <h1 style="margin: 0;">{{ page.title }}</h1>
-    <button id="tts-btn" aria-label="Listen to article" style="flex-shrink: 0; background: var(--card-bg); border: 1px solid var(--border); border-radius: 50%; width: 44px; height: 44px; cursor: pointer; display: flex; align-items: center; justify-content: center; margin-top: 0.2rem;">
+    <button id="tts-btn" aria-label="Listen to article" style="flex-shrink: 0; background: var(--card-bg); border: 1px solid var(--border); border-radius: 50%; width: 44px; height: 44px; cursor: pointer; display: flex; align-items: center; justify-content: center; margin-top: 0.2rem; opacity: 0.4;" disabled>
       <svg id="tts-play" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
         <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
@@ -40,6 +40,32 @@ layout: default
   }
   
   let speaking = false;
+  let voice = null;
+  
+  function enableButton() {
+    btn.disabled = false;
+    btn.style.opacity = '1';
+  }
+  
+  function loadVoices() {
+    const voices = speechSynthesis.getVoices();
+    if (voices.length > 0) {
+      voice = voices.find(v => v.lang.startsWith('en')) || voices[0];
+      enableButton();
+      return true;
+    }
+    return false;
+  }
+  
+  // Try immediately
+  if (!loadVoices()) {
+    // Wait for voices to load (needed on most mobile browsers)
+    speechSynthesis.onvoiceschanged = loadVoices;
+    // Fallback: enable anyway after 2s (some browsers don't fire event but still work)
+    setTimeout(function() {
+      if (btn.disabled) enableButton();
+    }, 2000);
+  }
   
   btn.addEventListener('click', function() {
     if (speaking) {
@@ -48,18 +74,38 @@ layout: default
       playIcon.style.display = 'block';
       stopIcon.style.display = 'none';
     } else {
+      // Android fix: cancel any pending speech first
+      speechSynthesis.cancel();
+      
       const text = content.innerText;
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.rate = 1;
+      if (voice) utterance.voice = voice;
+      
       utterance.onend = function() {
         speaking = false;
         playIcon.style.display = 'block';
         stopIcon.style.display = 'none';
       };
+      utterance.onerror = function() {
+        speaking = false;
+        playIcon.style.display = 'block';
+        stopIcon.style.display = 'none';
+      };
+      
       speechSynthesis.speak(utterance);
       speaking = true;
       playIcon.style.display = 'none';
       stopIcon.style.display = 'block';
+      
+      // Android bug: speech can pause randomly, this keeps it going
+      const keepAlive = setInterval(function() {
+        if (!speaking) {
+          clearInterval(keepAlive);
+        } else if (speechSynthesis.paused) {
+          speechSynthesis.resume();
+        }
+      }, 1000);
     }
   });
 })();
