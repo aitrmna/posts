@@ -2,12 +2,65 @@
 layout: default
 ---
 <article>
-  <h1>{{ page.title }}</h1>
+  <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem;">
+    <h1 style="margin: 0;">{{ page.title }}</h1>
+    <button id="tts-btn" aria-label="Listen to article" style="flex-shrink: 0; background: var(--card-bg); border: 1px solid var(--border); border-radius: 50%; width: 44px; height: 44px; cursor: pointer; display: flex; align-items: center; justify-content: center; margin-top: 0.2rem;">
+      <svg id="tts-play" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+        <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+      </svg>
+      <svg id="tts-stop" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+        <rect x="6" y="4" width="4" height="16"></rect>
+        <rect x="14" y="4" width="4" height="16"></rect>
+      </svg>
+    </button>
+  </div>
   {% if page.date or page.description %}
-  <div class="meta">
+  <div class="meta" style="margin-top: 0.75rem;">
     {% if page.date %}<time>{{ page.date | date: "%B %d, %Y" }}</time>{% endif %}
     {% if page.description %}<p style="margin-top: 0.5rem;">{{ page.description }}</p>{% endif %}
   </div>
   {% endif %}
+  <div id="article-content">
   {{ content }}
+  </div>
 </article>
+
+<script>
+(function() {
+  const btn = document.getElementById('tts-btn');
+  const playIcon = document.getElementById('tts-play');
+  const stopIcon = document.getElementById('tts-stop');
+  const content = document.getElementById('article-content');
+  
+  if (!('speechSynthesis' in window)) {
+    btn.style.display = 'none';
+    return;
+  }
+  
+  let speaking = false;
+  
+  btn.addEventListener('click', function() {
+    if (speaking) {
+      speechSynthesis.cancel();
+      speaking = false;
+      playIcon.style.display = 'block';
+      stopIcon.style.display = 'none';
+    } else {
+      const text = content.innerText;
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.rate = 1;
+      utterance.onend = function() {
+        speaking = false;
+        playIcon.style.display = 'block';
+        stopIcon.style.display = 'none';
+      };
+      speechSynthesis.speak(utterance);
+      speaking = true;
+      playIcon.style.display = 'none';
+      stopIcon.style.display = 'block';
+    }
+  });
+})();
+</script>
