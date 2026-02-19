@@ -1,6 +1,6 @@
 ---
 title: "Tenby Property Market"
-description: "69 houses for sale in a Pembrokeshire walled town. What caught our eye under £750k, max 3 beds."
+description: "69 houses for sale in a Pembrokeshire walled town. What caught our eye."
 date: 2026-02-19 21:00
 ---
 
