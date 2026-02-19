@@ -1,7 +1,7 @@
 ---
 title: "Tenby Property Market"
 description: "69 houses for sale in a Pembrokeshire walled town. What caught our eye."
-date: 2026-02-19 21:00
+date: 2026-02-19 16:45
 ---
 
 Tenby is a medieval walled town on the Pembrokeshire coast. Harbour, three sandy beaches, pastel-coloured Georgian houses, Caldey Island a mile offshore. It's a proper place — not a resort that empties in winter. The old town is compact enough to walk everywhere, and the coastal path runs right through it.
